@@ -1,0 +1,29 @@
+package com.technology.aau.controller;
+
+import com.technology.aau.dto.StudentResponse;
+import com.technology.aau.entity.Student;
+import com.technology.aau.service.StudentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v0/score")
+public class StudentController {
+
+    private final StudentService studentService;
+
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<StudentResponse> createStudent(@RequestBody Student student) {
+        StudentResponse response = studentService.createStudent(student);
+        return ResponseEntity.ok(response);
+    }
+
+}
