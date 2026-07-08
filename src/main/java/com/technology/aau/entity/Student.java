@@ -17,7 +17,8 @@ public class Student {
     private String lastName;
     private String email;
     private String password;
-    private List<StudentEnum> status;
+    @Enumerated(EnumType.STRING)
+    private StudentEnum status;
 
 
 

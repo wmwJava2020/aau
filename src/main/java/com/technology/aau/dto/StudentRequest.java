@@ -1,44 +1,24 @@
 package com.technology.aau.dto;
 
+import com.technology.aau.utility.StudentEnum;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
-
+@Data
+@Getter
+@Setter
 @Component
 public class StudentRequest {
+    // Getters and setters
+    @Getter
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private StudentEnum status;
 
-    // Getters and setters
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
