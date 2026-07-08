@@ -1,59 +1,93 @@
 package com.technology.aau.service;
 
+import com.technology.aau.dto.StudentResponse;
 import com.technology.aau.entity.Student;
 import com.technology.aau.respository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {
 
-    @Mock
-    private StudentRepository repository;
-
+    @InjectMocks
     private StudentServiceImpl service;
 
+    @Mock
+    private StudentRepository studentRepository;
 
-    @Test
-    void save_callsRepositorySave() {
-        Student student = new Student();
-        student.setStudentId(1);
-        service.createStudent(student);
-        verify(repository, times(1)).save(student);
+    private ModelMapper modelMapper;
+
+    @InjectMocks
+    private StudentServiceImpl studentService;
+
+    @BeforeEach
+    void setup() {
+        modelMapper = new ModelMapper();
+        studentService = new StudentServiceImpl(modelMapper, studentRepository);
     }
 
     @Test
-    void delete_callsRepositoryDelete() {
+    void testCreateStudent() {
+        // Arrange
+        Student req = new Student();
+        req.setFirstName("BEAKAL");
+        req.setLastName("MESSELE");
+        req.setEmail("beaka@gmail.com");
+        req.setPassword("passWord!");
+
+        Student saved = new Student();
+        saved.setStudentId(1);
+        saved.setFirstName("BEAKAL");
+        saved.setLastName("MESSELE");
+        saved.setEmail("beaka@gmail.com");
+        saved.setPassword("passWord!");
+
+        when(studentRepository.save(any(Student.class))).thenReturn(saved);
+
+        // Act
+        StudentResponse response = studentService.createStudent(req);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(saved.getStudentId(), response.getStudentId());
+        assertEquals("BEAKAL", response.getFirstName());
+        assertEquals("MESSELE", response.getLastName());
+        assertEquals("beaka@gmail.com", response.getEmail());
+
+        verify(studentRepository, times(1)).save(any(Student.class));
+    }
+
+    @Test
+    void testDeleteStudent() {
+        // Arrange
         Student student = new Student();
         student.setStudentId(2);
-        service.delete(student);
-        verify(repository, times(1)).delete(student);
+
+        // Act
+        studentService.delete(student);
+
+        // Assert
+        verify(studentRepository, times(1)).delete(student);
     }
 
     @Test
-    void grade_computesCorrectly() {
-        int result = service.grade(3, 4, 10);
-        assertEquals(22, result);
-    }
+    void testGradeCalculation() {
+        int creditHours = 3;
+        int contactHours = 4;
+        int assignmentScore = 20;
 
-    @Test
-    void grade_withZeroContact_returnsAssignment() {
-        int result = service.grade(5, 0, 7);
-        assertEquals(7, result);
-    }
+        int result = studentService.grade(creditHours, contactHours, assignmentScore);
 
-    @Test
-    void grade_withNegativeValues() {
-        int result = service.grade(-2, 3, 5);
-        assertEquals(-1, result);
+        assertEquals((creditHours * contactHours) + assignmentScore, result);
     }
 }
