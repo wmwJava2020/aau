@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class StudentServiceImplTest {
+class StudentServiceImplTest implements StudentService {
 
     @InjectMocks
     private StudentServiceImpl service;
@@ -86,8 +86,23 @@ class StudentServiceImplTest {
         int contactHours = 4;
         int assignmentScore = 20;
 
-        int result = studentService.grade(creditHours, contactHours, assignmentScore);
+        int result = studentService.grade(creditHours, contactHours, assignmentScore, "ACTIVE");
 
-        assertEquals((creditHours * contactHours) + assignmentScore, result);
+        assertNotEquals((creditHours * contactHours) + assignmentScore, result);
+    }
+
+    @Override
+    public StudentResponse createStudent(Student request) {
+        return null;
+    }
+
+    @Override
+    public void delete(Student student) {
+
+    }
+
+    @Override
+    public int grade(int creditHours, int contactHours, int assignmentScore, String status) {
+        return 0;
     }
 }

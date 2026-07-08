@@ -1,9 +1,9 @@
 package com.technology.aau.service;
-
+import com.technology.aau.utility.StudentException;
 import com.technology.aau.dto.StudentResponse;
 import com.technology.aau.entity.Student;
 import com.technology.aau.respository.StudentRepository;
-import com.technology.aau.utility.StudentEnum;
+import com.technology.aau.utility.StudentExceptionMessages;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-
     @Override
     public StudentResponse createStudent(Student req) {
         Student student = modelMapper.map(req, Student.class);
@@ -41,16 +40,36 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int grade(int creditHours, int contactHours, int assignmentScore) {
-        try {
-            log.info("Calculating grade for student with credit hours: " + creditHours + ", contact hours: " + contactHours + ", assignment score: " + assignmentScore);
-            if (!StudentEnum.ACTIVE.equals(StudentEnum.ACTIVE)) {
-            } else {
-                return (creditHours * contactHours) + assignmentScore;
-            }
+    public int grade(int creditHours, int contactHours, int assignmentScore, String status) {
 
-        } catch (Exception e) {
+        // Normalize status input
+        String normalizedStatus = status.trim().toUpperCase();
+
+        switch (normalizedStatus) {
+
+            case "ACTIVE":
+                return (creditHours + contactHours + assignmentScore) / 3;
+
+            case "EXTENSION":
+                return (creditHours + contactHours + assignmentScore) / 4;
+
+            case "REGULAR":
+                return (creditHours + contactHours + assignmentScore) / 5;
+
+            case "INACTIVE":
+                throw new StudentException(StudentExceptionMessages.MESSAGES.get(1));
+                // "Student is inactive"
+
+            case "SUSPENDED":
+                throw new StudentException(StudentExceptionMessages.MESSAGES.get(2));
+                // "Student is suspended"
+
+            default:
+                throw new StudentException(StudentExceptionMessages.MESSAGES.get(3));
+                // "Invalid student status"
         }
-        return creditHours;
     }
+
+
+
 }

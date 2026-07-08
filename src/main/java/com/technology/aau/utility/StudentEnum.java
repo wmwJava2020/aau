@@ -5,9 +5,9 @@ public enum StudentEnum {
     INACTIVE,
     SUSPENDED,
     RESUMED,
-    NORTH,
-    SOUTH,
-    WEST,
-    EAST
+    DROPPED,
+    WITHDRAWAL,
+    EXTENSION,
+    REGULAR
 
 }

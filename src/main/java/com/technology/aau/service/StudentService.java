@@ -7,5 +7,5 @@ public interface StudentService {
 
     StudentResponse createStudent(Student request);
     void delete(Student student);
-    int grade(int creditHours, int contactHours, int assignmentScore);
+    int grade(int creditHours, int contactHours, int assignmentScore,String status);
 }
