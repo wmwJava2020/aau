@@ -11,8 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -46,7 +44,7 @@ class StudentServiceImplTest implements StudentService {
         req.setPassword("passWord!");
 
         Student saved = new Student();
-        saved.setStudentId(1);
+        saved.setStudentId(1L);
         saved.setFirstName("BEAKAL");
         saved.setLastName("MESSELE");
         saved.setEmail("beaka@gmail.com");
@@ -71,10 +69,10 @@ class StudentServiceImplTest implements StudentService {
     void testDeleteStudent() {
         // Arrange
         Student student = new Student();
-        student.setStudentId(2);
+        student.setStudentId(2L);
 
         // Act
-        studentService.delete(student);
+        studentService.deleteStudent(student.getStudentId());
 
         // Assert
         verify(studentRepository, times(1)).delete(student);
@@ -97,8 +95,8 @@ class StudentServiceImplTest implements StudentService {
     }
 
     @Override
-    public void delete(Student student) {
-
+    public void deleteStudent(Long id) {
+        studentRepository.deleteById(id);
     }
 
     @Override

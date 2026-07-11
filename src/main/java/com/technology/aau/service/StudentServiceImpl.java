@@ -1,9 +1,9 @@
 package com.technology.aau.service;
-import com.technology.aau.utility.StudentException;
+import utility.StudentException;
 import com.technology.aau.dto.StudentResponse;
 import com.technology.aau.entity.Student;
 import com.technology.aau.respository.StudentRepository;
-import com.technology.aau.utility.StudentExceptionMessages;
+import utility.StudentExceptionMessages;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +34,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void delete(Student student) {
+    public void deleteStudent(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentException(StudentExceptionMessages.MESSAGES.get(0)));
+                // "Student not found"
         studentRepository.delete(student);
-        log.info("Student deleted: " + student);
+        log.info("Student deleted: " + id);
     }
 
     @Override

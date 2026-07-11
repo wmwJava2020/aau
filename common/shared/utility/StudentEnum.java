@@ -1,4 +1,4 @@
-package com.technology.aau.utility;
+package utility;
 
 public enum StudentEnum {
     ACTIVE,

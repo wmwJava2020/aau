@@ -1,9 +1,8 @@
 package com.technology.aau.entity;
 
-import com.technology.aau.utility.StudentEnum;
+import utility.StudentEnum;
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.List;
 
 @Data
 @Entity
@@ -12,7 +11,7 @@ public class Student {
 
     @Id
     @GeneratedValue
-    private int studentId;
+    private Long studentId;
     private String firstName;
     private String lastName;
     private String email;

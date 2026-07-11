@@ -6,6 +6,9 @@ import com.technology.aau.entity.Student;
 public interface StudentService {
 
     StudentResponse createStudent(Student request);
-    void delete(Student student);
-    int grade(int creditHours, int contactHours, int assignmentScore,String status);
+    void deleteStudent(Long id);
+    int grade(int creditHours,
+              int contactHours,
+              int assignmentScore,
+              String status);
 }

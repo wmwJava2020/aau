@@ -12,7 +12,6 @@ public class StudentController {
 
     private final StudentService studentService;
 
-
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -30,6 +29,11 @@ public class StudentController {
                      @RequestParam String status) {
         String normalizedStatus = status.trim().toUpperCase();
         return studentService.grade(creditHours, contactHours, assignmentScore, normalizedStatus);
+    }
+
+    @GetMapping("/delete-id")
+    public void deleteStudent(@RequestParam Long id) {
+        studentService.deleteStudent(id);
     }
 
 }

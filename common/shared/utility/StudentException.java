@@ -1,4 +1,4 @@
-package com.technology.aau.utility;
+package utility;
 
 import org.springframework.stereotype.Component;
 

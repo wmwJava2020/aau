@@ -1,6 +1,6 @@
 package com.technology.aau.dto;
 
-import com.technology.aau.utility.StudentEnum;
+import utility.StudentEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
