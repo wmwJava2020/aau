@@ -8,7 +8,7 @@ WORKDIR /app
 
 
 # Expose your Spring Boot port (change if needed)
-EXPOSE 7070
+EXPOSE 7060
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
